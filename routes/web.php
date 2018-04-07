@@ -11,7 +11,16 @@
 |
 */
 
-
+/*
+ * Pages Routes
+ * */
 Route::get('about', 'PagesController@getAbout');
 Route::get('contact', 'PagesController@getContact');
 Route::get('/', 'PagesController@getIndex');
+
+
+/*
+ * Post Routes
+ * */
+
+Route::resource('posts', 'PostController');
