@@ -16,15 +16,6 @@ class PostController extends Controller
      */
     public function index()
     {
-
-/*       for ($i = 0; $i < 1000; $i++) {
-            $post = new Post;
-            $post->title = 'Post title ' . $i;
-            $post->body  = $i . ' If your controller method is also expecting input from a route parameter you should list your route parameters after your other dependencies. For example, if your route is defined like so:';
-            $post->save();
-        }*/
-
-
         $posts = Post::orderBy('id', 'dec')->paginate(5);
 
         return view('posts.index')->withPosts($posts);
