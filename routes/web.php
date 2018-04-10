@@ -18,6 +18,9 @@ Route::get('about', 'PagesController@getAbout');
 Route::get('contact', 'PagesController@getContact');
 Route::get('/', 'PagesController@getIndex');
 
+//this name to call this route anywhere by route function
+Route::get('blog/{slug}', 'BlogController@getSingle')->where('slug', '[\w\d\-\_]+')->name('blog.single');
+Route::get('blog', 'BlogController@getIndex')->name('blog.index');
 
 /*
  * Post Routes

@@ -52,3 +52,7 @@
 .inline-block {
     display: inline-block;
 }
+
+.text-right {
+    text-align: right;
+}

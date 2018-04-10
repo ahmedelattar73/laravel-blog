@@ -11,12 +11,19 @@
             {{ Form::label('title', 'Title:') }}
             {{ Form::text('title', null, ["class" => 'form-control input-lg']) }}
 
+            {{ Form::label('slug', 'Slug:') }}
+            {{ Form::text('slug', null, array('class' => 'form-control', 'required' => '', 'minlength' => '5', 'maxlength' => '255') ) }}
+
             {{ Form::label('body', "Body:", ['class' => 'form-spacing-top']) }}
             {{ Form::textarea('body', null, ['class' => 'form-control']) }}
         </div>
 
         <div class="col-md-4">
             <div class="well">
+                <dl class="dl-horizontal">
+                    <dt>Created At:</dt>
+                    <dd><a href="{{ url('blog/' . $post->slug) }}">  {{ url('blog/' . $post->slug) }} </a></dd>
+                </dl>
                 <dl class="dl-horizontal">
                     <dt>Created At:</dt>
                     <dd>{{ date('M j, Y h:ia', strtotime($post->created_at)) }}</dd>
@@ -29,7 +36,7 @@
                 <hr>
                 <div class="row">
                     <div class="col-sm-6">
-                        {!! Html::linkRoute('posts.show', 'Cancel', array($post->id), array('class' => 'btn btn-danger btn-block')) !!}
+                        {!! Html::linkRoute('posts.index', 'Cancel', array($post->id), array('class' => 'btn btn-danger btn-block')) !!}
                     </div>
                     <div class="col-sm-6">
                         {{ Form::submit('Save Changes', ['class' => 'btn btn-success btn-block']) }}

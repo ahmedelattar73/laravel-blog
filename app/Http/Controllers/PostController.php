@@ -44,6 +44,7 @@ class PostController extends Controller
 
         $this->validate(request(), [
                 'title' => 'required|max:255',
+                'slug'  =>  'required|alpha_dash|min:5|max:255|unique:posts,slug',
                 'body'  =>  'required'
             ]);
 
@@ -52,6 +53,7 @@ class PostController extends Controller
         $post = new Post;
         $post->title = $request->title;
         $post->body  = $request->body;
+        $post->slug  = $request->slug;
         $post->save();
 
         //3-make session and redirect.
@@ -95,17 +97,28 @@ class PostController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //1- Validate the data and if it not correct automaticly will redirect to the create method
-
-        $this->validate(request(), [
-            'title' => 'required|max:255',
-            'body'  =>  'required'
-        ]);
-
-        //2- Insert the data to database
 
         $post = Post::find($id);
+
+        //1- Validate the data and if it not correct automaticly will redirect to the create method
+
+        if ($request->slug == $post->slug) {
+            $this->validate(request(), [
+                'title' => 'required|max:255',
+                'body'  =>  'required'
+            ]);
+        } else {
+            $this->validate(request(), [
+                'title' => 'required|max:255',
+                'slug'  =>  'required|alpha_dash|min:5|max:255|unique:posts,slug',
+                'body'  =>  'required'
+            ]);
+        }
+
+
+        //2- Insert the data to database
         $post->title = $request->title;
+        $post->slug  = $request->slug;
         $post->body  = $request->body;
         $post->save();
 
@@ -113,7 +126,7 @@ class PostController extends Controller
 
         Session::flash('success', 'The post updated successfuly');
 
-        return redirect()->route('posts.show', $post->id);
+        return redirect()->route('posts.edit', $post->id);
     }
 
     /**
