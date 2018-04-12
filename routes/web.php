@@ -11,15 +11,19 @@
 |
 */
 
+
 /*
  * Pages Routes
  * */
-Route::get('about', 'PagesController@getAbout');
-Route::get('contact', 'PagesController@getContact');
+Route::get('about', 'PagesController@getAbout')->name('page.about');
+
+Route::get('contact', 'PagesController@getContact')->name('page.contact');
+
 Route::get('/', 'PagesController@getIndex');
 
 //this name to call this route anywhere by route function
 Route::get('blog/{slug}', 'BlogController@getSingle')->where('slug', '[\w\d\-\_]+')->name('blog.single');
+
 Route::get('blog', 'BlogController@getIndex')->name('blog.index');
 
 /*
@@ -27,3 +31,7 @@ Route::get('blog', 'BlogController@getIndex')->name('blog.index');
  * */
 
 Route::resource('posts', 'PostController');
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
